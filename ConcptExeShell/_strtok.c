@@ -4,16 +4,14 @@
 char *_strtok(char *str, char delim)
 {
 	static char *input = NULL;
-	char *result;
+	char *token_array ;
 	int i;
 
-	
-
-	result = malloc(sizeof(str));
-	if (result == '\0')
+	token_array = malloc(sizeof(*token_array) - 1);
+	if (token_array == NULL)
 	{
-		free(result);
-		return(0);
+		free(token_array);
+		return(NULL);
 	}
 	if (str != NULL)
 		input = str;
@@ -22,42 +20,42 @@ char *_strtok(char *str, char delim)
 		free(input);
 		return (0);
 	}
-	for (i = 0; input[i]; i++)
+	for (i = 0; input[i] != '\0'; i++)
 	{
 		if (input[i] != delim)
 		{
-			result[i] = input[i];
+			token_array[i] = input[i];
 		}
 		else
 		{
-			result[i] = '\0';
+			token_array[i] = '\0';
 			input = input + i + 1;
-			return(result);
+			return(token_array);
 		}
-	}
-	result[i] = '\0';
+	}	
+	token_array[i] = '\0';
 	input = NULL;
-	return (result);
+
+
+	return (token_array);
 }
 
 int main(int argc, char **argv)
 {
-	int i = 1;
-	char *str = argv[i];
-	char *ptr;
+	int i;
+	char *str = argv[1];
+	char *token;
 	(void)argc;
-	
-	ptr = _strtok(str, ' ');
 
-/*	printf("%s\n", ptr);*/
-	if (ptr == 0)
+	token = _strtok(str, ' ');
+	
+	if (token == '\0')
 		return (0);
-	if (argv[i])
-	while (ptr)
+	for (i = 0; token != '\0' ; i++)
 	{
-		i++;
-		printf("%s\n", ptr);
-		ptr = _strtok(NULL, ' ');
+		argv[i] = token;
+		printf("%s\n", argv[i]);
+		token = _strtok(NULL, ' ');
 	}
 	str = NULL;
 	
