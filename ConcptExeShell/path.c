@@ -2,59 +2,76 @@
 
 int main(int ac, char **av, char **env)
 {
-	(void)ac;
+	(void)ac, (void)av;
+	char *prompt = "$Hell>";
+	char **array;
 	int i;
-	size_t n;
-	char *path;
+	size_t command_size;
+	char *command = NULL, *commandcopy = NULL;
 	char *token;
 	char *inputBuffer;
 	size_t inputLen;
 	struct stat statBuffer;
 	int status;
-	int interactive = 1;
+	int interactive = 0;
+	char delim[] = " ";
 	pid_t pid;
 
-	token = malloc(sizeof(char *) * 10);
+	token = malloc(sizeof(char *) * 256);
 
-	if (isatty(STDIN_FILENO) == 0)
+	if (isatty(STDIN_FILENO))
 	{
-		interactive = 0;
-		return (1);
+		write(STDOUT_FILENO, prompt, 7);
 	}
-	if (av[0])
+	while ((inputLen = getline(&inputBuffer, &command_size, stdin)))
 	{
-		if (interactive == 1)
-			printf("$Hell>");
+		command_size = 0;
+		inputLen = 0;
 
-		inputLen = getline(&inputBuffer, &n, stdin);
-		if (inputLen == -1)
+		if (interactive == EOF)
 		{
-			return (1);
+			free(command);
+			return (EXIT_SUCCESS);
 		}
-		printf("%s", inputBuffer);
+
+		token = strtok(commandcopy, delim);
 		
-		if (av[0] && av[1])
-		/* TOKENIZER*/
-			interactive = 0;
-			for (i = 0; env[i] != NULL; i++)
-			{
-				if (strncmp(env[i], "PATH", 4));
-				{
-					printf("%s\n", env[i]);
-				}
-			}
-			path = env[i];
-			token = strtok(path, "=");
-
-			for (i = 0; token != NULL; i++)
-			{
-
-				token = strtok(NULL, ":");
-				printf("Path: %s\n", token);
-			}
+		while (token != NULL)
+		{
+			token = strtok(NULL, delim);
+			command_size++;
+		}
+		array = malloc(sizeof(char *) * (command_size + 1));
+		token = strtok(command, " ");
+		
+		i = 0;
+		while (token != NULL)
+		{
+			array[i] = token;
+			token = strtok(NULL, " ");
 			i++;
-		
+		}
+		array[i] = NULL;
+		for (i = 0; env[i] != NULL; i++)
+		{
+			if (array[i] != NULL && strncmp(env[i], "PATH", 4) == 0);
+			{
+				printf("%s\n", env[i]);
+			//	printf("Array: %s\n", array[i]);
+			}
+		}
+		command = env[i];
+		token = strtok(command, ":");
+
+		for (i = 0; token != NULL; i++)
+		{
+
+			token = strtok(NULL, ":");
+			printf("Path: %s\n", array[i]);
+		}
+
 		pid = fork();
+		printf("Father PID: %d\n", pid);
 		if (pid == -1)
 		{
 			perror("Error");
@@ -62,12 +79,26 @@ int main(int ac, char **av, char **env)
 		}
 		if (pid == 0)
 		{
-			/*execve(token[0], token, NULL);*/
-			wait(&status);
-		}	
+			if ((execve(array[0], array, NULL) == -1))
+			{
+				printf("After execve %d\n",  i);
+				write(STDERR_FILENO, array[0], strlen(array[i]));
+				write(STDERR_FILENO, ": command not found\n", 21);
+			}
+			exit(status);
+		}
+		else
+		{
+			printf("PID is : %d\n", pid);
+			wait(NULL);
+		}
+		free(array);
+		if (isatty(STDIN_FILENO))
+			write(STDOUT_FILENO, prompt, 7);
 	}
+	free(token);
 	printf("PID: %d\n", pid);
-	printf("PATH = %s\n", path);
+	printf("PATH = %s\n", command);
 	printf("ENV: %s\n", env[i]);
 
 	return (0);
