@@ -17,7 +17,7 @@ int main(int ac, char **av, char **env)
 	{
 		interactive = 0;
 	}
-	while (av[0] != NULL)
+	if (av[0] != NULL)
 	{
 		if(interactive == 1)
 			printf("$Hell>");
