@@ -9,13 +9,16 @@
 #include <sys/wait.h>
 #include <string.h>
 #include <errno.h>
+#include <sys/stat.h>
 /* Macros */
 #define EXIT_SUCCESS 0
 #define EXIT_FAILURE 1
 #define PROMPT "Hell_Shell$" 
 /* Prototypes Functions */
 char *_strtok(char *str, char delim);
-
+int _strlen(char *s);
+int _strcmp(char *dest, char *src);
+char *_strcpy(char *dest, char *src);
 /**
  * struct stat - struct for bypassing forbidden glbal variables
  * @token2: fisrt member

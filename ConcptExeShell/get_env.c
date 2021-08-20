@@ -44,7 +44,7 @@ char *_getenv(char *name, char **environ)
 			environ_string[j] = environ[i][j];
 			j++;
 		}
-		if (strcmp(name, environ_string) == 0)
+		if (_strcmp(name, environ_string) == 0)
 		{
 			free(environ_string);
 			return (environ[i]);

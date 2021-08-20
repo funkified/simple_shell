@@ -6,7 +6,7 @@ int main(int ac, char **av, char **env)
 	char *prompt = "$Hell>";
 	char **array;
 	int i;
-	size_t command_size;
+	size_t command_size = 0, command_num = 0;
 	char *command = NULL, *commandcopy = NULL;
 	char *token;
 	char *inputBuffer;
@@ -23,29 +23,34 @@ int main(int ac, char **av, char **env)
 	{
 		write(STDOUT_FILENO, prompt, 7);
 	}
-<<<<<<< HEAD
-	if (av[0] != NULL)
-=======
+
 	while ((inputLen = getline(&inputBuffer, &command_size, stdin)))
->>>>>>> b00a3f80289932af7f72dfbac83bb742ca3cc756
 	{
 		command_size = 0;
 		inputLen = 0;
 
-		if (interactive == EOF)
+		if (inputLen == EOF)
 		{
 			free(command);
 			return (EXIT_SUCCESS);
 		}
+		
+		for (i = 0; inputBuffer[i]; i++)
+		{
+			if (inputBuffer[i] == '\n')
+				inputBuffer[i] = '\0';
+		}
+		inputBuffer = strtok(inputBuffer, "#");
+		commandcopy = strdup(inputBuffer);
 
 		token = strtok(commandcopy, delim);
 		
 		while (token != NULL)
 		{
 			token = strtok(NULL, delim);
-			command_size++;
+			command_num++;
 		}
-		array = malloc(sizeof(char *) * (command_size + 1));
+		array = malloc(sizeof(char *) * (command_num + 1));
 		token = strtok(command, " ");
 		
 		i = 0;
@@ -56,54 +61,58 @@ int main(int ac, char **av, char **env)
 			i++;
 		}
 		array[i] = NULL;
-		for (i = 0; env[i] != NULL; i++)
+		
+		if (array[0] != NULL && _strcmp("exit", array[0]) == 0)
 		{
-			if (array[i] != NULL && strncmp(env[i], "PATH", 4) == 0);
+			if (array[1] != NULL)
 			{
-				printf("%s\n", env[i]);
-			//	printf("Array: %s\n", array[i]);
+				if (*(array[1]) <= '9' && *(array[1]) >= '0')
+					status = atoi(array[1]);
+			}
+			free(token);
+			free(array);
+			free(commandcopy);
+
+			pid = fork();
+			while (pid != 1)
+			{
+				exit(status);
 			}
 		}
-		command = env[i];
-		token = strtok(command, ":");
-
-		for (i = 0; token != NULL; i++)
+//		for (i = 0; env[i] != NULL; i++)
+		if (array[0] != NULL && _strcmp("env", array[0]) == 0);
 		{
-
-			token = strtok(NULL, ":");
-			printf("Path: %s\n", array[i]);
+			if (array[1] != NULL)
+					showenv(array[1], env);
+				else
+					show_only_env(env);
 		}
-
-		pid = fork();
-		printf("Father PID: %d\n", pid);
-		if (pid == -1)
-		{
-			perror("Error");
-			return (1);
-		}
-		if (pid == 0)
+		if (fork() == 0)
 		{
 			if ((execve(array[0], array, NULL) == -1))
 			{
-				printf("After execve %d\n",  i);
-				write(STDERR_FILENO, array[0], strlen(array[i]));
+//				printf("After execve %d\n",  i);
+				write(STDERR_FILENO, array[0], _strlen(array[0]));
 				write(STDERR_FILENO, ": command not found\n", 21);
 			}
 			exit(status);
 		}
 		else
 		{
-			printf("PID is : %d\n", pid);
+		//	printf("PID is : %d\n", pid);
 			wait(NULL);
 		}
 		free(array);
+		free(command);
+		command = NULL;
+		commandcopy = NULL;
 		if (isatty(STDIN_FILENO))
 			write(STDOUT_FILENO, prompt, 7);
 	}
 	free(token);
-	printf("PID: %d\n", pid);
+/*	printf("PID: %d\n", pid);
 	printf("PATH = %s\n", command);
 	printf("ENV: %s\n", env[i]);
-
+*/
 	return (0);
 }
