@@ -46,6 +46,7 @@
 ## Files Directory
 
 | File Name | Description |
+| --- | --- |
 | holberton.h | Header file with libraries and prototypes |
 | main.c | Main function file |
 
