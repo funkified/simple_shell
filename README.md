@@ -5,12 +5,11 @@
  - Should work in Interactive and Non-Interactive Mode
  - Files will be compiled on Ubuntu 20.04 LTS
 
-## Example
-
 ## Requirements
  * Create header file (holberton.h)
  * Compile using gcc using the options ''' -Wall -Werror -Wextra -pedantic -std=gnu89'''
  * Allowed Functions and System Calls
+
 | List of authorized functions and system calls |
 | --- |
 | access (man 2 access)|
@@ -43,3 +42,7 @@
 |wait3 (man 2 wait3)|
 |wait4 (man 2 wait4)|
 |write (man 2 write)|
+
+## Files Directory
+
+## Examples
