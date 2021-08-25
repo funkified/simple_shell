@@ -49,5 +49,5 @@ void freeAll(struct data *d);
 void showenv(char *args, char **environ);
 void show_only_env(char **environ);
 int our_cd(char *path, char **environ);
-
+int _atoi(char *s);
 #endif

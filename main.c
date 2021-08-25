@@ -93,26 +93,26 @@ int main(int argc, char **argv, char **env)
 			mine.buffer = NULL;
 			array[0] = static_path(array[0], env_string, &mine);
 			free(mine.buffer);
-			/* needed to free exact amount but stops program from working free(mine.token2); */
-			if (fork() == 0)
+		}	/* needed to free exact amount but stops program from working free(mine.token2); */
+		if (fork() == 0)
+		{
+			if ((execve(array[0], array, NULL) == -1))
 			{
-				if ((execve(array[0], array, NULL) == -1))
-				{
-					write(STDERR_FILENO, array[0], _strlen(array[0]));
-					write(STDERR_FILENO, ": command not found\n", 21);
-				}
-				exit(status);
+				write(STDERR_FILENO, array[0], _strlen(array[0]));
+				write(STDERR_FILENO, ": command not found\n", 21);
 			}
-			else
-				wait(NULL);
-
-			freeAndFlush(command, commandcopy, array);
-
-			command = NULL;
-			commandcopy = NULL;
-			atty();
+			exit(status);
 		}
+		else
+			wait(NULL);
+
+		freeAndFlush(command, commandcopy, array);
+
+		command = NULL;
+		commandcopy = NULL;
+		atty();
 	}
+
 	freeAll(&mine);
 	return (0);
 }
