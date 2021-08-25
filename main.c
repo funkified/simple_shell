@@ -4,6 +4,7 @@
  * @argc: number of argumetns passed
  * @argv: argument passed
  * @env: enviroment command
+ * Return: 0
  */
 
 int main(int argc, char **argv, char **env)
@@ -38,7 +39,7 @@ int main(int argc, char **argv, char **env)
 				command[i] = '\0';
 		}
 		command = strtok(command, "#");
-		commandcopy = strdup(command);
+		commandcopy = _strdup(command, &mine);
 
 		token = strtok(commandcopy, " ");
 
@@ -66,7 +67,7 @@ int main(int argc, char **argv, char **env)
 			if (array[1] != NULL)
 			{
 				if (*(array[1]) <= '9' && *(array[1]) >= '0')
-					status = atoi(array[1]);
+					status = _atoi(array[1]);
 			}
 			freeAndFlush(command, commandcopy, array);
 			pid = fork();
@@ -124,7 +125,12 @@ void atty(void)
 	if (isatty(STDIN_FILENO))
 		write(STDOUT_FILENO, "$Hell>", 7);
 }
-
+/**
+ * freeAndFlush - free memory
+ * @command: command from user
+ * @commandcopy: copy of command
+ * @array: array of command
+ */
 void freeAndFlush(char *command, char *commandcopy, char **array)
 {
 	free(command);

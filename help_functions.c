@@ -53,15 +53,16 @@ int _strlen(char *s)
  */
 char *_strcpy(char *dest, char *src)
 {
-	int i;
+	char *start = dest;
 
-	for (i = 0; src[i] != '\0'; i++)
+	while (*src != '\0')
 	{
-		dest[i] = src[i];
+		*dest = *src;
+		dest++;
+		src++;
 	}
-	dest[i] = '\0';
-
-	return (dest);
+	*dest = '\0';
+	return (start);
 }
 
 /**
@@ -82,4 +83,31 @@ char *_strdup(char *str, struct data *d)
 	_strcpy(d->buffer, str);
 	return (d->buffer);
 }
+/**
+ * _atoi - Function that converts a string to an integer
+ * @s: string to convert
+ * Return: The string as an integer, or 0 if none
+ */
+int _atoi(char *s)
+{
+	unsigned int value = 0;
+	int sign = 1;
 
+	do {
+		if (*s == '-')
+		{
+			sign = -sign;
+		}
+		else if ((*s >= '0' && *s <= '9') && *s != 0)
+		{
+			value *= 10;
+			value += (*s - '0');
+		}
+		else if (value > 0)
+		{
+			break;
+		}
+	} while (*s++);
+
+	return (value * sign);
+}
