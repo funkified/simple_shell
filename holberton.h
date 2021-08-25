@@ -23,6 +23,9 @@ char *_getenv(char *name, char **environ);
 char *get_input(void);
 char **split(char *input);
 void freeAndFlush(char *command, char *commandcopy, char **array);
+char *cmd_cpy(char *dest, char *src, char *usr_cmd);
+char *static_path(char *user_command, char *env_string, struct data *d);
+
 /**
  * struct stat - struct for bypassing forbidden glbal variables
  * @token2: fisrt member

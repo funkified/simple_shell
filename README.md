@@ -1,4 +1,4 @@
-# simple shell
+# Simple Shell
 
 ## Description
  - Create our own simple UNIX command Interpreter
@@ -7,7 +7,7 @@
 
 ## Requirements
  * Create header file (holberton.h)
- * Compile using gcc using the options ''' -Wall -Werror -Wextra -pedantic -std=gnu89'''
+ * Compile using gcc using the options -Wall -Werror -Wextra -pedantic -std=gnu89
  * Allowed Functions and System Calls
 
 | List of authorized functions and system calls |
