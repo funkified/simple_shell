@@ -70,7 +70,7 @@ int main(int argc, char **argv, char **env)
 			}
 			freeAndFlush(command, commandcopy, array);
 			pid = fork();
-			while(pid != 1)
+			while (pid != 1)
 			{
 				exit(status);
 			}
@@ -121,7 +121,7 @@ int main(int argc, char **argv, char **env)
  */
 void atty(void)
 {
-	if(isatty(STDIN_FILENO))
+	if (isatty(STDIN_FILENO))
 		write(STDOUT_FILENO, "$Hell>", 7);
 }
 
