@@ -16,6 +16,7 @@ int main(int argc, char **argv, char **env)
 	pid_t pid;
 	struct data mine;
 	(void)argc, (void)argv;
+
 	signal(SIGINT, SIG_IGN);
 	env_string = _getenv("PATH", env);
 	atty();
@@ -110,7 +111,7 @@ int main(int argc, char **argv, char **env)
 			commandcopy = NULL;
 			atty();
 		}
-	
+	}
 	freeAll(&mine);
 	return (0);
 }

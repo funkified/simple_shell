@@ -17,6 +17,7 @@ int main(int argc, char **args, char **env)
 	char *fullPath = NULL;
 	int currenTokPath;
 	size_t tokenPathsize = 0;
+	char cwd[1024];
 
 	fullPath = malloc(sizeof(char) * 256);
 	tokens = malloc(sizeof(char *) * 10);
@@ -27,13 +28,11 @@ int main(int argc, char **args, char **env)
 	}
 	while (1)
 	{
-		if (interactive == 1)
-		{
-			printf("$hell ");
-		}
+		printf("$hell ");
 		/* get line from standard input */
 		inputLenght = getline(&inputBuffer, &n, stdin);
-	}
+		getcwd(cwd, sizeof(cwd));
+		printf("\nDir: %s", cwd);
 	tokens[0] = strtok(inputBuffer, delimeters);
 
 	/* Create Tokens */
@@ -125,7 +124,7 @@ int main(int argc, char **args, char **env)
 		}
 		printf("%s\n", fullPath);
 		printf("%s", env[i]);
-	
+	}	
 	free(tokens);
 	return (0);
 }

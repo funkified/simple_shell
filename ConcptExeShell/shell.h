@@ -15,10 +15,12 @@
 #define EXIT_FAILURE 1
 #define PROMPT "Hell_Shell$" 
 /* Prototypes Functions */
+void atty(void);
 char *_strtok(char *str, char delim);
 int _strlen(char *s);
 int _strcmp(char *dest, char *src);
 char *_strcpy(char *dest, char *src);
+char *_getenv(char *name, char **environ);
 /**
  * struct stat - struct for bypassing forbidden glbal variables
  * @token2: fisrt member
