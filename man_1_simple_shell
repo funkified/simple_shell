@@ -1,0 +1,44 @@
+.TH simple_shell "1" "August 25 2021" "shell man page"
+
+.SH NAME
+simple_shell - a UNIX command interpreter
+
+.SH SYNOPSIS
+hsh [options] [file]
+
+.SH DESCRIPTION
+simple_shell is a sh-compatible command line interpreter that executes commmand's given either by the standard input or by reading from a file.
+
+.SH Parameters
+Shell Variables
+PWD,
+The current working directory that is set by cd.
+PATH,
+The search PATH searches for commands
+
+.SH Readline
+This is the library and function that handles input for procressing from the shell when running interactively.
+
+.SH Prompting
+When being run interactively, simple_shell displays the prompt when it is ready to read a command and finds it in PATH. 
+
+.SH RETURN VALUE
+Returns 0 or EXIT_SUCCESS upon exiting the program.
+
+.SH Exit Status
+The exit status of a program is 0 by default, however, if a user enters exit with a number between 0 and 255 the number will be set to the status variable and exit with that number returned to the system as the command status.
+
+.SH EXAMPLE
+./hsh
+echo "/bin/ls" | ./hsh
+
+.SH SIGNAL
+When ^C is given as input simple_shell ignores it as to not quit the shell and won't store it as input.
+
+.SH BUGS
+none.
+
+.SH AUTHORS
+Gabriela Martinez & Sergio Vera 
+
+.SH Directories

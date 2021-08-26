@@ -49,5 +49,10 @@
 | --- | --- |
 | holberton.h | Header file with libraries and prototypes |
 | main.c | Main function file |
+| get_env.c | Takes enviroment value |
+| helper_funcs.c | Manages strings |
+| path.c | determines if user input is a valid |
+| env.c | print entire environmental variable list onto console |
+| our_cd.c | allows user to move between directories |
 
 ## Examples
