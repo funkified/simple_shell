@@ -33,14 +33,11 @@ struct data
 
 /* Prototypes Functions */
 void atty(void);
-char *_strtok(char *str, char delim);
 int _strlen(char *s);
 int _strcmp(char *dest, char *src);
 char *_strcpy(char *dest, char *src);
 char *_getenv(char *name, char **environ);
 char *get_env_value(char *str, char *delim);
-char *get_input(void);
-char **split(char *input);
 void freeAndFlush(char *command, char *commandcopy, char **array);
 char *cmd_cpy(char *dest, char *src, char *usr_cmd);
 char *static_path(char *user_command, char *env_string, struct data *d);
